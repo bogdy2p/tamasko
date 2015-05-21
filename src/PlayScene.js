@@ -19,9 +19,11 @@ var PlayScene = cc.Scene.extend({
                 this.collisionCoinBegin.bind(this), null, null, null);
         this.space.addCollisionHandler(SpriteTag.runner, SpriteTag.rock,
                 this.collisionRockBegin.bind(this), null, null, null);
+        this.space.addCollisionHandler(SpriteTag.runner, SpriteTag.building,
+                this.collisionBuildingBegin.bind(this), null, null, null);
     },
     collisionCoinBegin: function (arbiter, space) {
-        console.log("COLIDED WITH COIN");
+        //console.log("COLIDED WITH COIN");
         var shapes = arbiter.getShapes();
         // shapes[0] is the player / runner
         this.shapesToRemove.push(shapes[1]);
@@ -37,8 +39,11 @@ var PlayScene = cc.Scene.extend({
         cc.director.pause();
         this.addChild(new GameOverLayer());
         cc.audioEngine.stopMusic();
-        
-        
+
+
+    },
+    collisionBuildingBegin: function (arbiter, space) {
+        //cc.log("YOU TOUCHED THE BUILDING");
     },
     onEnter: function () {
         this._super();

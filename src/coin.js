@@ -15,6 +15,9 @@ var Coin = cc.Class.extend({
      * @param {cc.p}
      */
     ctor: function (spriteSheet, space, pos) {
+//        console.log("Position inside coin constructor :");
+//        console.log(pos);
+        
         this.space = space;
 
         // initialize coin animation

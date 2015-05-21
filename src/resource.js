@@ -7,6 +7,7 @@ var res = {
     map_png: "res/map.png",
     map00_tmx: "res/map00.tmx",
     map01_tmx: "res/map01.tmx",
+    map02_tmx: "res/map02.tmx",
     background_png: "res/background.png",
     background_plist: "res/background.plist",
     restart_n_png: "res/restart_n.png",
@@ -14,7 +15,9 @@ var res = {
     background_mp3: "res/background.mp3",
     jump_mp3: "res/jump.mp3",
     pickup_coin_mp3: "res/pickup_coin.mp3",
-    reeabuilding_png: "res/reeabuilding_small.png"
+    building_plist: "res/building.plist",
+    building_png: "res/building.png",
+//    reeabuilding_png: "res/reeabuilding_small.png"
 };
 
 var g_resources = [
@@ -28,12 +31,15 @@ var g_resources = [
     res.map_png,
     res.map00_tmx,
     res.map01_tmx,
+    res.map02_tmx,
     res.background_plist,
     res.restart_n_png,
     res.restart_s_png,
     res.background_mp3,
     res.jump_mp3,
     res.pickup_coin_mp3,
-    res.reeabuilding_png
+    res.building_plist,
+    res.building_png
+    
 
 ];

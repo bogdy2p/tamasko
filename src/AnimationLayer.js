@@ -24,7 +24,7 @@ var AnimationLayer = cc.Layer.extend({
         this.space = space;
         this.init();
         this._debugNode = new cc.PhysicsDebugNode(this.space);
-        this._debugNode.setVisible(false);
+        this._debugNode.setVisible(true);
         this.addChild(this._debugNode, 10);
 
     },
@@ -121,7 +121,7 @@ var AnimationLayer = cc.Layer.extend({
             animFrames.push(frame);
         }
 
-        animaion = new cc.Animation(animFrames, 0.2);
+        animation = new cc.Animation(animFrames, 0.2);
         this.jumpUpAction = new cc.Animate(animation);
         this.jumpUpAction.retain();
 
