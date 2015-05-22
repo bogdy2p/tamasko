@@ -12,12 +12,13 @@ var res = {
     background_plist: "res/background.plist",
     restart_n_png: "res/restart_n.png",
     restart_s_png: "res/restart_s.png",
+    success_n_png: "res/success_n.png",
+    success_s_png: "res/success_s.png",
     background_mp3: "res/background.mp3",
     jump_mp3: "res/jump.mp3",
     pickup_coin_mp3: "res/pickup_coin.mp3",
     building_plist: "res/building.plist",
     building_png: "res/building.png",
-//    reeabuilding_png: "res/reeabuilding_small.png"
 };
 
 var g_resources = [
@@ -35,6 +36,8 @@ var g_resources = [
     res.background_plist,
     res.restart_n_png,
     res.restart_s_png,
+    res.success_n_png,
+    res.success_s_png,
     res.background_mp3,
     res.jump_mp3,
     res.pickup_coin_mp3,

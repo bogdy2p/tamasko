@@ -1,4 +1,4 @@
-var BackgroundLayer = cc.Layer.extend({
+var BackgroundLayerLevel2 = cc.Layer.extend({
     map00: null,
     map01: null,
     map02: null,
@@ -27,13 +27,15 @@ var BackgroundLayer = cc.Layer.extend({
         this.map01 = new cc.TMXTiledMap.create(res.map01_tmx);
         this.map01.setPosition(cc.p(this.mapWidth, 0));
         this.addChild(this.map01);
+
+
         //This is the map with the new 
         //This is the map with the new 
         this.map02 = new cc.TMXTiledMap.create(res.map02_tmx);
-        this.map02.setPosition(cc.p(this.mapWidth, 0));
+        this.map02.setPosition(cc.p(this.mapWidth , 0));
         this.addChild(this.map02);
 
-
+        
 
 
         //create spritesheet
@@ -48,8 +50,19 @@ var BackgroundLayer = cc.Layer.extend({
 //        console.log(this.map00);
         this.loadObjects(this.map00, 0);
         this.loadObjects(this.map01, 1);
+
+
         this.scheduleUpdate();
     },
+//    loadEnding: function () {
+//
+//        var reeabuilding = new ReeaBuilding(this.spriteSheet,
+//                this.space,
+//                cc.p(this.mapWidth - 60, 60));
+//        this.objects.push(reeabuilding);
+//
+//
+//    },
     loadObjects: function (map, mapIndex) {
         //add coins
         var coinGroup = map.getObjectGroup("coin");
@@ -69,7 +82,7 @@ var BackgroundLayer = cc.Layer.extend({
         if (rockGroup) {
             var rockArray = rockGroup.getObjects();
             for (var i = 0; i < rockArray.length; i++) {
-                //   console.log(this.spriteSheet);
+             //   console.log(this.spriteSheet);
                 var rock = new Rock(this.spriteSheet,
                         this.space,
                         rockArray[i]["x"] + this.mapWidth * mapIndex);
@@ -77,12 +90,18 @@ var BackgroundLayer = cc.Layer.extend({
                 this.objects.push(rock);
             }
         }
-
+        
         var buildingGroup = map.getObjectGroup("building");
         if (buildingGroup) {
+           // console.log("There is a building Group !");
             var buildingArray = buildingGroup.getObjects();
+          //  console.log("Building array is : " + buildingArray);
             for (var i = 0; i < buildingArray.length; i++) {
+              //  console.log("This Building : ");
+               // console.log(this.buildingSheet);
                 var theposition = buildingArray[i]["x"] + this.mapWidth * mapIndex;
+//                var theposition = 400;
+               // console.log(theposition);
                 var sbuilding = new Building(this.buildingSheet,
                         this.space,
                         theposition);
@@ -91,17 +110,20 @@ var BackgroundLayer = cc.Layer.extend({
             }
         }
     },
-    checkAndReload: function (eyeX, endGamePoint) {
+    checkAndReload: function (eyeX) {
         var newMapIndex = parseInt(eyeX / this.mapWidth);
-        var endGamePoint = endGamePoint;
-        cc.log(endGamePoint);
 
-        if ((parseInt(eyeX) > endGamePoint)) {
-            cc.log("EyeX is more than endgame.");
+
+        if (parseInt(eyeX) > 5200) {
+            // Do all the logic so that the game adds the 3'rd map when player reaches 60 metres
+            //console.log("ParseInt is Bigger than 600 here.");
             var newPositionX = this.mapWidth * (newMapIndex + 1);
+
             this.map02.setPositionX(newPositionX);
+            //console.log("Map2 Position set to " + newPositionX);
+
+            //console.log("LoadObjects Will Be Called. The new map index is " + (newMapIndex + 1));
             this.loadObjects(this.map02, newMapIndex + 1);
-            return true;
         }
 
 
@@ -111,19 +133,15 @@ var BackgroundLayer = cc.Layer.extend({
         }
         if (0 == newMapIndex % 2) {
             //change mapSecond
-            if (parseInt(eyeX) < endGamePoint) {
-                cc.log("EyeX is smaller than endgame.");
-                this.map01.setPositionX(this.mapWidth * (newMapIndex + 1));
-                this.loadObjects(this.map01, newMapIndex + 1);
-            }
+            this.map01.setPositionX(this.mapWidth * (newMapIndex + 1));
+            this.loadObjects(this.map01, newMapIndex + 1);
+            
 
         } else {
             //change mapFirst
-            if (parseInt(eyeX) < endGamePoint) {
-                cc.log("EyeX is smaller than endgame.");
-                this.map00.setPositionX(this.mapWidth * (newMapIndex + 1));
-                this.loadObjects(this.map00, newMapIndex + 1);
-            }
+            this.map00.setPositionX(this.mapWidth * (newMapIndex + 1));
+            this.loadObjects(this.map00, newMapIndex + 1);
+            
         }
         this.removeObjects(newMapIndex - 1);
         this.mapIndex = newMapIndex;
@@ -134,7 +152,7 @@ var BackgroundLayer = cc.Layer.extend({
     update: function (dt) {
         var animationLayer = this.getParent().getChildByTag(TagOfLayer.Animation);
         var eyeX = animationLayer.getEyeX();
-        this.checkAndReload(eyeX, 1200);
+        this.checkAndReload(eyeX);
     },
     removeObjects: function (mapIndex) {
         while ((function (obj, index) {

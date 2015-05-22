@@ -1,4 +1,4 @@
-var PlayScene = cc.Scene.extend({
+var Level2 = cc.Scene.extend({
     space: null,
     slidenumber: null,
     shapesToRemove: [],
@@ -6,8 +6,9 @@ var PlayScene = cc.Scene.extend({
     initPhysics: function () {
         this.space = new cp.Space();
         //2 setup the Gravity
-        this.space.gravity = cp.v(0, -100);
+        this.space.gravity = cp.v(0, -400);
 
+        //3 Set up walls
         var wallBottom = new cp.SegmentShape(this.space.staticBody,
                 cp.v(0, g_groundHeight), // start point
                 cp.v(4294967295, g_groundHeight), // MAX INT 
@@ -30,8 +31,6 @@ var PlayScene = cc.Scene.extend({
         statusLayer.addCoin(1);
         cc.audioEngine.playEffect(res.pickup_coin_mp3);
 
-
-
     },
     collisionRockBegin: function (arbiter, space) {
         cc.log("==game over");
@@ -43,19 +42,25 @@ var PlayScene = cc.Scene.extend({
     },
     collisionBuildingBegin: function (arbiter, space) {
         cc.log("YOU TOUCHED THE BUILDING");
+         var shapes = arbiter.getShapes();
+        
         cc.director.pause();
+        this.shapesToRemove.push(shapes[0]);
+        this.shapesToRemove.push(shapes[1]);
         this.addChild(new LevelSuccessLayer());
         cc.audioEngine.stopMusic();
-
-
+        
+        
     },
     onEnter: function () {
         this._super();
         this.initPhysics();
         this.gameLayer = new cc.Layer();
 
-        this.gameLayer.addChild(new BackgroundLayer(this.space), 0, TagOfLayer.background);
-        this.gameLayer.addChild(new AnimationLayer(this.space), 0, TagOfLayer.Animation);
+
+        this.gameLayer.addChild(new BackgroundLayerLevel2(this.space), 0, TagOfLayer.background);
+//        this.gameLayer.addChild(new AnimationLayer(this.space), 0, TagOfLayer.Animation);
+        this.gameLayer.addChild(new AnimationLayerLevel2(this.space),0, TagOfLayer.Animation);
         this.addChild(this.gameLayer);
 
         this.addChild(new StatusLayer, 0, TagOfLayer.Status);
@@ -76,8 +81,10 @@ var PlayScene = cc.Scene.extend({
 
         }
         this.shapesToRemove = [];
+
         var animationLayer = this.gameLayer.getChildByTag(TagOfLayer.Animation);
         var eyeX = animationLayer.getEyeX();
+
         this.gameLayer.setPosition(cc.p(-eyeX, 0));
 
     },

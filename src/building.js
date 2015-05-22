@@ -35,7 +35,7 @@ var Building = cc.Class.extend({
 
         //initialize physics
 
-        var radius = 0.95 * this.sprite.getContentSize().width / 2;
+        var radius = 0.4 * this.sprite.getContentSize().width / 2;
         var body = new cp.StaticBody();
 
         body.setPos(cc.p(posX, this.sprite.getContentSize().height / 2 + g_groundHeight));
@@ -51,7 +51,7 @@ var Building = cc.Class.extend({
 
         //add sprite to sprite sheet
         this.sprite.runAction(action);
-        spriteSheet.addChild(this.sprite, 1);
+        spriteSheet.addChild(this.sprite);
     },
     removeFromParent: function () {
         this.space.removeStaticShape(this.shape);

@@ -8,7 +8,7 @@ if (typeof RunnerStat == "undefined") {
 }
 ;
 
-var AnimationLayer = cc.Layer.extend({
+var AnimationLayerLevel2 = cc.Layer.extend({
     spriteSheet: null,
     runningAction: null,
     sprite: null,
@@ -45,7 +45,7 @@ var AnimationLayer = cc.Layer.extend({
 
         this.body = new cp.Body(1, cp.momentForBox(1, contentSize.width / 1.5 , contentSize.height));
         this.body.p = cc.p(g_runnerStartX, g_groundHeight + contentSize.height / 2);
-        this.body.applyImpulse(cp.v(150, 0), cp.v(0, 0));
+        this.body.applyImpulse(cp.v(200, 0), cp.v(0, 0));
         this.space.addBody(this.body);
 
         this.shape = new cp.BoxShape(this.body, contentSize.width - 14, contentSize.height);
@@ -162,7 +162,8 @@ var AnimationLayer = cc.Layer.extend({
     jump: function () {
         cc.log("jump");
         if (this.stat == RunnerStat.running) {
-            this.body.applyImpulse(cp.v(1, 350), cp.v(0, 0));
+//            this.body.applyImpulse(cp.v(1, 350), cp.v(0, 0));
+            this.body.applyImpulse(cp.v(10, 350), cp.v(0, 0));
             this.stat = RunnerStat.jumpUp;
             this.sprite.stopAllActions();
             this.sprite.runAction(this.jumpUpAction);

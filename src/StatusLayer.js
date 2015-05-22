@@ -29,7 +29,7 @@ var StatusLayer = cc.Layer.extend({
         this.addChild(this.labelMeter);
 
 
-        this.labelName = new cc.LabelTTF("TamashCO", "Arial", 26);
+        this.labelName = new cc.LabelTTF("tamashco", "Verdana", 26);
         this.labelName.setPosition(cc.p(winsize.width / 2 - 10, winsize.height - 50));
         this.addChild(this.labelName);
 
